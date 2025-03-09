@@ -42,7 +42,7 @@ resource "aws_instance" "ourfirst" {
 connection {
   type        = "ssh"
   user        = "ubuntu"
-  private_key = file("/home/ubuntu/.ssh/zoomkey.pem")
+  private_key = file("/home/ubuntu/.ssh/revision.pem")
   host        = self.public_ip
 }
 
