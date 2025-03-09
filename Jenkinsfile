@@ -121,15 +121,16 @@ pipeline {
             }
         }
 
-        stage('Run Ansible Playbook from Local') {
-            steps {
-             withCredentials([sshUserPrivateKey(credentialsId: 'ansible-key', keyFileVariable: 'SSH_KEY')]) {
-            sh """
-                 ansible-playbook -i "${EC2_IP}," --private-key ${SSH_KEY} ansible/webserver.yml
-                 """
-                }
+       stage('Run Ansible Playbook from Local') {
+        steps {
+            withCredentials([sshUserPrivateKey(credentialsId: 'ansible-key', keyFileVariable: 'SSH_KEY')]) {
+                sh """
+                    ansible-playbook -i "${EC2_IP}," --private-key "${SSH_KEY}" ansible/webserver.yml
+                """
             }
         }
+    }
+
 
   }
 }
