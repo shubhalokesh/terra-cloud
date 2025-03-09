@@ -45,7 +45,7 @@ provisioner "remote-exec" {
       "sudo apt-add-repository --yes --update ppa:ansible/ansible",
       "sudo apt install -y ansible",
       "mkdir -p ~/ansible/roles",
-      "echo 'Ansible installed successfully'"
+      "echo 'Ansible installed successfully'",
       "git clone https://github.com/hhgsharish/Ansible_Playbook_Harish.git ~/ansible",
       "echo 'Ansible and repository setup complete'"
     ]
