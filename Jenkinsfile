@@ -125,7 +125,7 @@ pipeline {
         steps {
             withCredentials([sshUserPrivateKey(credentialsId: 'ansible-key', keyFileVariable: 'SSH_KEY')]) {
                 sh """
-                    ansible-playbook -i "${EC2_IP}," --private-key "${SSH_KEY}" ansible/webserver.yml
+                    ansible-playbook -i "${EC2_IP}," --private-key "${SSH_KEY}" webserver.yml
                 """
             }
         }
