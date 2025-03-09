@@ -32,10 +32,19 @@ resource "aws_instance" "ourfirst" {
   availability_zone = "us-east-2a"
   instance_type = "t2.micro"
   user_data = filebase64("install_apache.sh")
+  security_groups        = ["${aws_security_group.webserver_access.name}"]
+  key_name               = "revision"
   tags = {
     Name  = "ec2-test"
     Location = "Mumbai"
   }
+
+connection {
+  type        = "ssh"
+  user        = "ubuntu"
+  private_key = file("/home/ubuntu/.ssh/zoomkey.pem")
+  host        = self.public_ip
+}
 
   # Install Ansible on the EC2 instance
 provisioner "remote-exec" {
