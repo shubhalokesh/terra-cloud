@@ -28,16 +28,15 @@ resource "aws_security_group" "webserver_access" {
 }
 
 resource "aws_instance" "ourfirst" {
-  ami           = "ami-0cb91c7de36eed2cb"
-  availability_zone = "us-east-2a"
-  instance_type = "t2.micro"
-  user_data = filebase64("install_ansible.sh")
-  security_groups        = ["${aws_security_group.webserver_access.name}"]
+  ami                    = "ami-0cb91c7de36eed2cb"
+  availability_zone      = "us-east-2a"
+  instance_type          = "t2.micro"
+  user_data              = filebase64("install_ansible.sh")
+  vpc_security_group_ids = [aws_security_group.webserver_access.id]  # Correct reference
   key_name               = "revision"
+  
   tags = {
-    Name  = "ec2-test"
-    Location = "Mumbai"
+    Name      = "ec2-test"
+    Location  = "Mumbai"
   }
-
-
 }
