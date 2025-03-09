@@ -13,6 +13,9 @@ pipeline {
         AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
         AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
         AWS_DEFAULT_REGION    = "us-east-2"
+        SSH_KEY = "/home/ubuntu/.ssh/revision.pem"  // Replace with your private key
+        ANSIBLE_PLAYBOOK = "webserver.yml"
+        GIT_REPO = "https://github.com/hhgsharish/Ansible_Playbook_Harish.git"
     }
 
 
@@ -99,6 +102,30 @@ pipeline {
                 }
         }
     }
+
+         stage('Checkout Code') {
+            steps {
+                git branch: 'main', url: "${GIT_REPO}"
+            }
+        }
+
+          stage('Get EC2 Public IP') {
+            steps {
+                script {
+                    def output = sh(script: "terraform output -raw ec2_public_ip", returnStdout: true).trim()
+                    env.EC2_IP = output
+                    echo "EC2 Public IP: ${env.EC2_IP}"
+                }
+            }
+        }
+
+        stage('Run Ansible Playbook from Local') {
+            steps {
+                sh """
+                ansible-playbook -i ${env.EC2_IP}, --private-key ${SSH_KEY} webserver.yml
+                """
+            }
+        }
 
   }
 }
