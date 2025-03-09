@@ -112,9 +112,11 @@ pipeline {
           stage('Get EC2 Public IP') {
             steps {
                 script {
+                    dir('terraform/terra-cloud') {
                     def output = sh(script: "terraform output -raw ec2_public_ip", returnStdout: true).trim()
                     env.EC2_IP = output
                     echo "EC2 Public IP: ${env.EC2_IP}"
+                }
                 }
             }
         }
@@ -122,7 +124,7 @@ pipeline {
         stage('Run Ansible Playbook from Local') {
             steps {
                 sh """
-                ansible-playbook -i ${env.EC2_IP}, --private-key ${SSH_KEY} webserver.yml
+                ansible-playbook -i "${EC2_IP}," --private-key ${SSH_KEY} ansible/Ansible_Playbook_Harish/webserver.yml
                 """
             }
         }
