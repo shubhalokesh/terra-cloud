@@ -12,7 +12,7 @@ pipeline {
      environment {
         AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
         AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
-        AWS_DEFAULT_REGION    = "ap-south-1"
+        AWS_DEFAULT_REGION    = "us-east-2"
     }
 
 
@@ -28,7 +28,7 @@ pipeline {
                         dir("terraform")
                         {
                             sh("""
-                                git clone "https://github.com/Tejasks16/terra-cloud.git"
+                                git clone "https://github.com/hhgsharish/terra-cloud.git"
                              """)
                         }
                     }
