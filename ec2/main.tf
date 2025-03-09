@@ -37,4 +37,29 @@ resource "aws_instance" "ourfirst" {
     Location = "Mumbai"
   }
 
+  # Install Ansible on the EC2 instance
+provisioner "remote-exec" {
+    inline = [
+      "sudo apt update",
+      "sudo apt install -y software-properties-common",
+      "sudo apt-add-repository --yes --update ppa:ansible/ansible",
+      "sudo apt install -y ansible",
+      "mkdir -p ~/ansible/roles",
+      "echo 'Ansible installed successfully'"
+      "git clone https://github.com/hhgsharish/Ansible_Playbook_Harish.git ~/ansible",
+      "echo 'Ansible and repository setup complete'"
+    ]
+  }
+ provisioner "remote-exec" {
+    inline = [
+      "cd ~/ansible",
+      "ansible-playbook -i 'localhost,' -c local webserver.yml"
+    ]
+  }
+
+
+
+
 }
+
+
