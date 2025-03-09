@@ -81,8 +81,10 @@ pipeline {
                 }
             }
             
-            steps {
-                sh "terraform apply -input=false tfplan"
+           steps {
+                dir('terraform/terra-cloud') {  // Add this directory block, same as in Plan stage
+                    sh "terraform apply -input=false tfplan"
+                }
             }
         }
         
