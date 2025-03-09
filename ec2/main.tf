@@ -31,8 +31,6 @@ resource "aws_instance" "ourfirst" {
   ami           = "ami-0cb91c7de36eed2cb"
   availability_zone = "us-east-2a"
   instance_type = "t2.micro"
-  security_groups = ["${aws_security_group.webserver_access.name}"]
-  key_name = "zoomkey"
   user_data = filebase64("install_apache.sh")
   tags = {
     Name  = "ec2-test"
