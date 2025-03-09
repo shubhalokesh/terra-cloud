@@ -126,7 +126,7 @@ pipeline {
             withCredentials([sshUserPrivateKey(credentialsId: 'ansible-key', keyFileVariable: 'SSH_KEY')]) {
                 sh """
                     export ANSIBLE_HOST_KEY_CHECKING=False
-                    ansible-playbook -i "${EC2_IP}," --private-key "${SSH_KEY}" webserver.yml
+                    ansible-playbook -i "${EC2_IP}," --private-key "${SSH_KEY}" -u ubuntu webserver.yml
                 """
             }
         }
