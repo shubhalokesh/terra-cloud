@@ -46,7 +46,6 @@ connection {
   host        = self.public_ip
 }
 
-  # Install Ansible on the EC2 instance
 provisioner "remote-exec" {
   inline = [
     "sudo apt update",
@@ -55,15 +54,24 @@ provisioner "remote-exec" {
     "sudo apt install -y ansible",
     "mkdir -p ~/ansible/roles",
     "echo 'Ansible installed successfully'",
+
+    # Remove existing ansible directory before cloning
+    "rm -rf ~/ansible",
     "git clone https://github.com/hhgsharish/Ansible_Playbook_Harish.git ~/ansible",
-    "echo 'Repository cloned to:'",
+    "echo 'Repository cloned successfully'",
+
+    # Check the structure of the cloned repository
     "ls -la ~/ansible",
-    "cd ~/ansible",
-    "find . -name 'webserver.yml'",  # This will help locate the playbook
-    "cd playbooks",
-    "ansible-playbook -i 'localhost,' -c local webserver.yml"
+    "find ~/ansible -name 'webserver.yml'",  # Locate the playbook
+
+    # Change directory based on the actual structure
+    "cd ~/ansible || exit 1",
+    
+    # Run the playbook (Adjust the path if needed)
+    "ansible-playbook -i 'localhost,' -c local ~/ansible/webserver.yml"
   ]
 }
+
 
 
 
