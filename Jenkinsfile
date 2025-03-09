@@ -24,12 +24,17 @@ pipeline {
                 }
             }
             steps {
-                 script{
-                        dir("terraform")
-                        {
-                            sh("""
+                    script {
+                        dir("terraform") {
+                            // Check if the "terra-cloud" directory exists
+                            sh '''
+                                if [ -d "terra-cloud" ]; then
+                                    echo "Directory exists. Deleting it..."
+                                    rm -rf terra-cloud
+                                fi
+                                echo "Cloning the repository..."
                                 git clone "https://github.com/hhgsharish/terra-cloud.git"
-                             """)
+                            '''
                         }
                     }
                 }
