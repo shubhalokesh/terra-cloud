@@ -61,7 +61,7 @@ provisioner "remote-exec" {
   }
  provisioner "remote-exec" {
     inline = [
-      "cd ~/ansible",
+      "cd ~/playbooks/ansible",
       "ansible-playbook -i 'localhost,' -c local webserver.yml"
     ]
   }
